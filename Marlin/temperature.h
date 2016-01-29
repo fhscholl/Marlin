@@ -163,13 +163,15 @@ void setWatch();
 void updatePID();
 
 #ifdef THERMAL_RUNAWAY_PROTECTION_PERIOD && THERMAL_RUNAWAY_PROTECTION_PERIOD > 0
-void thermal_runaway_protection(int *state, unsigned long *timer, float temperature, float target_temperature, int heater_id, int period_seconds, int hysteresis_degc);
+void thermal_runaway_protection(int *state, unsigned long *timer, float temperature, float target_temperature, float *target_temperature_cache, int heater_id, int period_seconds, int hysteresis_degc);
 static int thermal_runaway_state_machine[3]; // = {0,0,0};
 static unsigned long thermal_runaway_timer[3]; // = {0,0,0};
 static bool thermal_runaway = false;
+static float thermal_runaway_target_temperature_cache[3];
   #if TEMP_SENSOR_BED != 0
     static int thermal_runaway_bed_state_machine;
     static unsigned long thermal_runaway_bed_timer;
+    static float thermal_runaway_target_temperature_bed_cache;
   #endif
 #endif
 
